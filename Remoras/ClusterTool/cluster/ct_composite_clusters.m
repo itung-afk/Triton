@@ -43,16 +43,8 @@ if ~exist(s.outDir,'dir')
     mkdir(s.outDir)
 else
     oldFileList = dir(fullfile(s.outDir,['*',s.outputName,'*']));
-    if ~isempty(oldFileList)
-        waitfor(warndlg(['WARNING: You are about to overwrite prior output. ',...
-                    'If the number of clusters produced now is fewer than ',... 
-                    'produced previously, you may end up with old cluster files ',...
-                    'mixed in with new ones. To reduce risk of errors, consider ',...
-                    'deleting, changing output folder, or changing output name. (Use Control-C to stop).'],...
-                'Warning: File Overwrite','replace'));
-            
-    end
 end
+
 cd(s.outDir)
 if s.diary
     diary(fullfile(s.outDir,sprintf('composite_clust_diary_%s.txt',datestr(now,'YYYYMMDD'))))
@@ -123,6 +115,7 @@ end
 % Put click spectra into a matrix
 sumSpecMat = vertcat(binDataPruned.sumSpec);
 nSpecMat = horzcat(binDataPruned.nSpec)';
+
 dTTmat = vertcat(binDataPruned.dTT);
 cRateMat = vertcat(binDataPruned.clickRate);
 clickTimes = horzcat(binDataPruned(:).clickTimes);
@@ -248,6 +241,9 @@ wNodeDeg = {};
 %     tritonMode = 1; % if REMORA.ct is populated, assume we're running through a triton gui and 
 %     % triton tools are fair game.
 % end
+
+% REMORA.ct.CC_params.rmPriorClusters = 0;
+
 if  tritonMode && isfield(REMORA.ct.CC,'rm_clusters')...
     && REMORA.ct.CC_params.rmPriorClusters
     badSet = REMORA.ct.CC.rmSet;

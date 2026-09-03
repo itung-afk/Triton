@@ -11,6 +11,11 @@ if p.saveNoise
         yNFilt = cParams.yNFiltVec;
         specNoiseTf = cParams.specNoiseTfVec;
 end
+
+if isempty(clickTimes)
+    return
+end
+
 if p.saveForTPWS % only save what you need to build a TPWS file
     if p.saveNoise
         save(fileName,'clickTimes','ppSignal','f','hdr','specClickTf',...

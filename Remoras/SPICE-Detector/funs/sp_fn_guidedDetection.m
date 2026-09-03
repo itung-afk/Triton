@@ -25,6 +25,18 @@ elseif size(gDTxt,2)>= 2
     %start and end dates are formatted as text
     disp('No number columns found')
     disp('Assuming guided detection times are in MM/DD/YYYY hh:mm:ss format')
+    formatTimeTF = cellfun(@length, gDTxt(2:end,1))<11;
+    while sum(formatTimeTF)>0
+        idx = find(formatTimeTF,1,'first');
+        gDTxt(idx+1,1) = {[gDTxt{idx+1,1} ' 00:00:00 AM']};
+        formatTimeTF = cellfun(@length, gDTxt(2:end,1))<11;
+    end
+    formatVar1TF = cellfun(@length, gDTxt(2:end,2))<11;
+    while sum(formatVar1TF)>0
+        idx = find(formatVar1TF,1,'first');
+        gDTxt(idx+1,2) = {[gDTxt{idx+1,2} ' 00:00:00 AM']};
+        formatVar1TF = cellfun(@length, gDTxt(2:end,2))<11;
+    end
     matlabDates = [datenum(gDTxt(2:end,1),'mm/dd/yyyy HH:MM:SS'),datenum(gDTxt(2:end,2),'mm/dd/yyyy HH:MM:SS')];
     
 end  
