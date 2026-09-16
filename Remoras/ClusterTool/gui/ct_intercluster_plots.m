@@ -32,12 +32,12 @@ for iF = 1:length(nodeSet)
         warning('Frequency vector and spectra differ in length. Display errors possible in plots')
         fPlot = linspace(s.startFreq,s.endFreq,length(compositeData(iF).spectraMeanSet));
     end
-    plot(fPlot,compositeData(iF).spectraMeanSet,'-k','lineWidth',2)
+    plot(fPlot,compositeData(iF).spectraMeanSet,'-w','lineWidth',2)
     xlim([fPlot(1),fPlot(end)])
 
     text(.5,.1,sprintf('N = %0.0f',size(nodeSet{iF},2)),'Units','normalized',...
-        'BackgroundColor','w','Margin',1)
-    plot(fPlot,compositeData(iF).specPrctile,'--k','lineWidth',2)
+        'Color', 'w', 'BackgroundColor', [0.5 0.5 0.5], 'Margin',1)
+    plot(fPlot,compositeData(iF).specPrctile,'--w','lineWidth',2)
     grid on
     hold off
     if normTF
